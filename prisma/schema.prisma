@@ -11,15 +11,25 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  avatar    String?
-  name      String
-  bio       String?
-  premium   Boolean   @default(false)
-  password  String?
-  username  String    @unique
-  email     String    @unique
-  signedIn  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id           String         @id @default(cuid())
+  avatar       String?
+  name         String
+  bio          String?
+  premium      Boolean        @default(false)
+  password     String?
+  username     String         @unique
+  email        String         @unique
+  signedIn     DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  RefreshToken RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  token     String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

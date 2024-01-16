@@ -34,6 +34,9 @@ class EnvironmentVariables {
 
   @IsNumber()
   JWT_EXPIRATION: number;
+
+  @IsNumber()
+  REFRESH_TOKEN_EXPIRATION: number;
 }
 
 export function validate(config: Record<string, unknown>) {
