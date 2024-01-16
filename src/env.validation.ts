@@ -12,16 +12,19 @@ class EnvironmentVariables {
   NODE_ENV: Environment;
 
   @IsNumber()
-  PORT: number;
+  SERVER_PORT: number;
 
   @IsString()
-  DB_PASSWORD: string;
+  DATABASE_PASSWORD: string;
 
   @IsString()
-  DB_USERNAME: string;
+  DATABASE_USERNAME: string;
 
   @IsString()
-  DB_DATABASE_NAME: string;
+  DATABASE_NAME: string;
+
+  @IsString()
+  DATABASE_URL: string;
 }
 
 export function validate(config: Record<string, unknown>) {
