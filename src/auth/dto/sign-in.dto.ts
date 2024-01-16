@@ -1,11 +1,11 @@
-import { IsString } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { IsString } from 'class-validator'
+import { Transform } from 'class-transformer'
 
 export class SignInDto {
   @IsString()
   @Transform(({ value }) => String(value).toLocaleLowerCase())
-  username: string;
+  username: string
 
   @IsString()
-  password: string;
+  password: string
 }
