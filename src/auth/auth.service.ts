@@ -4,12 +4,14 @@ import { JwtService } from '@nestjs/jwt'
 import { SignUpDto } from './dto/sign-up.dto'
 import { PrismaService } from '../common/services/prisma.service'
 import { SignInDto } from './dto/sign-in.dto'
+import { RefreshTokenService } from 'src/common/services/refresh-token.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly refreshService: RefreshTokenService,
   ) {}
 
   async usernameExists(username: string, excludeId?: string): Promise<boolean> {
@@ -85,9 +87,11 @@ export class AuthService {
     user = await this.prisma.user.findFirst({ where: { id: user.id } })
 
     const accessToken = this.jwtService.sign({ sub: user.id })
+    const refreshToken = await this.refreshService.generateToken(user.id)
 
     return {
       accessToken,
+      refreshToken,
     }
   }
 }
