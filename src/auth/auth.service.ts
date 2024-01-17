@@ -94,4 +94,12 @@ export class AuthService {
       refreshToken,
     }
   }
+
+  async refresh(refreshToken: string) {
+    const user = await this.refreshService.getUserIfTokenIsValid(refreshToken)
+    if (!user) throw new BadRequestException('Invalid or expired refresh token. Please reauthenticate.')
+
+    const accessToken = this.jwtService.sign({ sub: user.id })
+    return { accessToken }
+  }
 }
